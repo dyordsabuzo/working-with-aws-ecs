@@ -1,10 +1,10 @@
 terraform {
-    backend "remote" {
-        hostname = "api.terraform.io"
-        organization = "pablosspot"
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "pablosspot"
 
-        workspaces {
-            prefix = "ps-wordpress-ecs-"
-        }
+    workspaces {
+      prefix = "ps-wordpress-ecs-"
     }
+  }
 }

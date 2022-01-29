@@ -4,7 +4,7 @@ terraform {
     organization = "pablosspot"
 
     workspaces {
-      prefix = "ps-wordpress-lb-"
+      prefix = "ps-wordpress-rds-"
     }
   }
 }
