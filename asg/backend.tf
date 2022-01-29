@@ -1,9 +1,9 @@
 terraform {
   backend "remote" {
-    hostname     = "api.terraform.io"
+    hostname     = "app.terraform.io"
     organization = "pablosspot"
 
-    worworkspaces {
+    workspaces {
       prefix = "ps-wordpress-asg-"
     }
   }
