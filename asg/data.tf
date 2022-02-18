@@ -38,3 +38,7 @@ data "template_file" "nginx_conf" {
     nginx_port = var.nginx_port
   }
 }
+
+data "aws_availability_zones" "zones" {
+  state = "available"
+}

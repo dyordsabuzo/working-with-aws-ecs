@@ -7,6 +7,9 @@ sudo systemctl start amazon-ssm-agent
 
 mkdir -p /var/nginx
 
-echo "${nginx_conf}" > nginx/server.conf
+echo "${nginx_conf}" > /var/nginx/server.conf
+
+private_ip=$(hostname -i)
+sed -i -e "s/wordpress/$private_ip/g" /var/nginx/server.conf
 
 echo "ECS_CLUSTER=${cluster_name}" >> /etc/ecs/ecs.config

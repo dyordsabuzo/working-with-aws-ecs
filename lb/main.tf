@@ -3,7 +3,7 @@ resource "aws_lb" "lb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = [data.aws_subnet_ids.subnets.ids]
+  subnets            = data.aws_subnet_ids.subnets.ids
 }
 
 resource "aws_security_group" "lb_sg" {
@@ -13,6 +13,13 @@ resource "aws_security_group" "lb_sg" {
   ingress {
     from_port   = 443
     to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -42,6 +49,7 @@ resource "aws_lb_listener" "listener" {
     }
   }
 
+  protocol          = "HTTPS"
   load_balancer_arn = aws_lb.lb.arn
   port              = 443
   ssl_policy        = "ELBSecurityPolicy-2016-08"
@@ -74,6 +82,7 @@ resource "aws_lb_target_group" "target" {
     protocol            = "HTTP"
     interval            = 10
     unhealthy_threshold = 6
+    matcher             = "200,301-399"
   }
 }
 
@@ -86,5 +95,20 @@ resource "aws_route53_record" "record" {
     name                   = aws_lb.lb.dns_name
     zone_id                = aws_lb.lb.zone_id
     evaluate_target_health = true
+  }
+}
+
+resource "aws_lb_listener" "http_listner" {
+  load_balancer_arn = aws_lb.lb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
   }
 }
