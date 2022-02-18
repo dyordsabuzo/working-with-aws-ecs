@@ -4,6 +4,7 @@ resource "aws_autoscaling_group" "asg" {
   min_size             = 2
   max_size             = 3
   termination_policies = ["OldestInstance"]
+  availability_zones   = data.aws_availability_zones.zones.names
 
   launch_template {
     id      = aws_launch_template.template.id
@@ -34,7 +35,7 @@ resource "aws_launch_template" "template" {
     }
   }
 
-  user_data = data.template_file.userdata.rendered
+  user_data = base64encode(data.template_file.userdata.rendered)
 
 }
 

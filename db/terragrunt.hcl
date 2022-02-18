@@ -7,6 +7,6 @@ terraform {
 }
 
 inputs = {
-  database_name = "wordpress-db"
-  database_master_username = "wordpress-dbuser"
+  database_name = "wordpressdb"
+  database_master_username = "wordpressdbuser"
 }
