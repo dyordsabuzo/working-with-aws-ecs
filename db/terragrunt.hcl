@@ -3,7 +3,7 @@ include {
 }
 
 terraform {
-  source = "tfr://app.terraform.io/pablosspot/pablosspot-rds/aws?version=0.0.2"
+  source = "tfr://app.terraform.io/pablosspot/pablosspot-rds/aws?version=0.0.6"
 }
 
 inputs = {
