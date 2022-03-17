@@ -14,3 +14,9 @@ variable "nginx_port" {
   description = "NGINX container port"
   default     = 80
 }
+
+variable "target_type" {
+  type        = string
+  description = "Target type for load balancer target group"
+  default     = "ip"
+}
