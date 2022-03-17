@@ -3,7 +3,7 @@ include {
 }
 
 terraform {
-  source = "tfr://app.terraform.io/pablosspot/pablosspot-ecs/aws?version=0.0.1"
+  source = "tfr://app.terraform.io/pablosspot/pablosspot-ecs/aws?version=0.0.3"
 }
 
 dependency "lb" {
@@ -28,6 +28,7 @@ inputs = {
   service_name = "webapp"
   task_family = "wordpress"
   target_group_arn = dependency.lb.outputs.target_group_arn
+  main_container_port = 80
   container_definition = jsonencode([
     {
       name      = "wordpress"
@@ -37,7 +38,6 @@ inputs = {
       essential = true
       portMappings = [{
         containerPort = 80
-        hostPort      = 80
       }]
       environment = [
         {
