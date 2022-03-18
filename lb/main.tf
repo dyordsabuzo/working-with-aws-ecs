@@ -73,10 +73,11 @@ resource "aws_lb_listener_rule" "rule" {
 }
 
 resource "aws_lb_target_group" "target" {
-  name     = "wordpress-${terraform.workspace}"
-  protocol = "HTTP"
-  port     = var.nginx_port
-  vpc_id   = aws_default_vpc.default.id
+  name        = "wordpress-${terraform.workspace}"
+  protocol    = "HTTP"
+  port        = var.nginx_port
+  vpc_id      = aws_default_vpc.default.id
+  target_type = var.target_type
 
   health_check {
     protocol            = "HTTP"
