@@ -23,6 +23,8 @@ dependency "db" {
   }
 }
 
+add new line
+
 inputs = {
   cluster_name = "webapp-cluster"
   service_name = "webapp"
