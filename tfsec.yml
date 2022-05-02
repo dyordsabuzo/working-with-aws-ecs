@@ -1,0 +1,6 @@
+---
+minimum_severity: HIGH
+severity_overrides:
+  aws-vpc-no-public-egress-sgr: LOW
+  aws-vpc-no-public-ingress-sgr: HIGH
+  aws-elb-use-secure-tls-policy: HIGH
