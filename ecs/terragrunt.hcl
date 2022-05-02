@@ -3,7 +3,7 @@ include {
 }
 
 terraform {
-  source = "tfr://app.terraform.io/pablosspot/pablosspot-ecs/aws?version=0.0.3"
+  source = "tfr://app.terraform.io/pablosspot/pablosspot-ecs/aws?version=0.0.9"
 }
 
 dependency "lb" {
@@ -59,13 +59,5 @@ inputs = {
           valueFrom = dependency.db.outputs.dbpassword_arn
         }
       ]
-      logConfiguration = {
-        logDriver = "awslogs"
-        options = {
-          awslogs-region        = "ap-southeast-2"
-          awslogs-group         = "/webapp-cluster/webapp"
-          awslogs-stream-prefix = "wordpress"
-        }
-      }
     }])
 }
