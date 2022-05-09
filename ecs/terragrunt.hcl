@@ -3,7 +3,7 @@ include {
 }
 
 terraform {
-  source = "tfr://app.terraform.io/pablosspot/pablosspot-ecs/aws?version=0.0.9"
+  source = "tfr://app.terraform.io/pablosspot/pablosspot-ecs/aws?version=0.0.12"
 }
 
 dependency "lb" {
@@ -29,35 +29,21 @@ inputs = {
   task_family = "wordpress"
   target_group_arn = dependency.lb.outputs.target_group_arn
   main_container_port = 80
-  container_definition = jsonencode([
+  container_definitions = [
     {
       name      = "wordpress"
       image     = "wordpress:latest"
       cpu       = 512
       memory    = 512
       essential = true
-      portMappings = [{
-        containerPort = 80
-      }]
-      environment = [
-        {
-          name  = "WORDPRESS_DB_HOST"
-          value = dependency.db.outputs.dbhost
-        },
-        {
-          name  = "WORDPRESS_DB_USER"
-          value = dependency.db.outputs.dbuser
-        },
-        {
-          name  = "WORDPRESS_DB_NAME"
-          value = dependency.db.outputs.dbname
-        }
-      ]
-      secrets = [
-        {
-          name      = "WORDPRESS_DB_PASSWORD"
-          valueFrom = dependency.db.outputs.dbpassword_arn
-        }
-      ]
-    }])
+      container_port = 80
+      environment = {
+          WORDPRESS_DB_HOST = dependency.db.outputs.dbhost
+          WORDPRESS_DB_USER = dependency.db.outputs.dbuser
+          WORDPRESS_DB_NAME = dependency.db.outputs.dbname
+      }
+      secrets = {
+          WORDPRESS_DB_PASSWORD = dependency.db.outputs.dbpassword_arn
+      }
+    }]
 }
