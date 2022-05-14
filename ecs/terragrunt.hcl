@@ -3,7 +3,7 @@ include {
 }
 
 terraform {
-  source = "tfr://app.terraform.io/pablosspot/pablosspot-ecs/aws?version=0.0.12"
+  source = "tfr://app.terraform.io/pablosspot/pablosspot-ecs/aws?version=0.0.14"
 }
 
 dependency "lb" {
@@ -26,6 +26,11 @@ dependency "db" {
 inputs = {
   cluster_name = "webapp-cluster"
   service_name = "webapp"
+  launch_type = {
+    type = "FARGATE"
+    cpu = 256
+    memory = 512
+  }
   task_family = "wordpress"
   target_group_arn = dependency.lb.outputs.target_group_arn
   main_container_port = 80
@@ -33,7 +38,7 @@ inputs = {
     {
       name      = "wordpress"
       image     = "wordpress:latest"
-      cpu       = 512
+      cpu       = 256
       memory    = 512
       essential = true
       container_port = 80
