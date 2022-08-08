@@ -7,7 +7,7 @@ terraform {
 }
 
 inputs = {
-  base_domain = "pablosspot.ga"
+  base_domain = "pablosspot.ml"
   system_name = "wordpress"
   application_port = 80
 }
